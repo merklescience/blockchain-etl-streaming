@@ -1,12 +1,13 @@
 def GenerateConfig(context):
     resources = []
 
-    chains = ['bitcoin', 'bitcoin_cash', 'dogecoin', 'litecoin', 'dash', 'zcash']
+    #chains = ['bitcoin', 'bitcoin_cash', 'dogecoin', 'litecoin', 'dash', 'zcash']
+    chains = ['bitcoin']
     entity_types = ['blocks', 'transactions']
 
     for chain in chains:
         topic_name_prefix = 'crypto_' + chain
-        subscription_name_prefix = 'crypto_' + chain + '.dataflow.bigquery'
+        subscription_name_prefix = 'crypto_' + chain + '.dataflow.clickhouse'
         # 7 days
         message_retention_duration = '604800s'
 

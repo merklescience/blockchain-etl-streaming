@@ -36,10 +36,28 @@ gcloud container clusters create ethereum-etl-streaming \
 --scopes pubsub,storage-rw,logging-write,monitoring-write,service-management,service-control,trace
 ```
 
+
+```bash
+gcloud container clusters create blockchain-etl-streaming \
+--zone us-central1-a \
+--num-nodes 1 \
+--disk-size 10GB \
+--machine-type custom-2-4096 \
+--network default \
+--subnetwork default \
+--scopes pubsub,storage-rw,logging-write,monitoring-write,service-management,service-control,trace
+```
+
+
 2. Get `kubectl` credentials:
 
 ```bash
 gcloud container clusters get-credentials ethereum-etl-streaming \
+--zone us-central1-a
+```
+
+```bash
+gcloud container clusters get-credentials blockchain-etl-streaming \
 --zone us-central1-a
 ```
 
@@ -67,10 +85,6 @@ e.g. `gs:/<YOUR_BUCKET_HERE>/ethereum-etl/streaming`.
 
 Download the key. Create a Kubernetes secret:
 
-```bash
-kubectl create secret generic streaming-app-key --namespace eth --from-file=key.json=$HOME/Downloads/key.json
-```
-
 6. Install [helm] (https://github.com/helm/helm#install) 
 
 ```bash
@@ -78,6 +92,20 @@ brew install helm
 helm init  
 bash patch-tiller.sh
 ```
+
+```bash
+kubectl create secret generic streaming-app-key --namespace eth --from-file=key.json=$HOME/Desktop/merkle/staging-btc-etl-4a48dd2254f2.json 
+
+
+```
+
+
+```bash
+kubectl create secret generic streaming-app-key --namespace btc --from-file=key.json=$HOME/Desktop/merkle/staging-btc-etl-4a48dd2254f2.json 
+
+```
+
+
 7. Copy [example values](example_values) directory to `values` dir and adjust all the files at least with your bucket and project ID.
 8. Install ETL apps via helm using chart from this repo and values we adjust on previous step, for example:
 ```bash
@@ -88,10 +116,8 @@ helm install --name dogecoin --namespace btc charts/blockchain-etl-streaming --v
 helm install --name litecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values.yaml
 helm install --name zcash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/zcash/values.yaml
 
-helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming \ 
---values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
-helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming \ 
---values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml 
+helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
+helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml 
 
 helm install --name eos-blocks --namespace eos charts/blockchain-etl-streaming --values values/eos/block_data/values.yaml
 ``` 
