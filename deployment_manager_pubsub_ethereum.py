@@ -1,7 +1,7 @@
 def GenerateConfig(context):
     resources = []
 
-    chains = ['ethereum']
+    chains = ['ethereum_0_lag']
     entity_types = ['transactions', 'token_transfers', 'traces']
 
     for chain in chains:

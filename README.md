@@ -109,6 +109,12 @@ kubectl create secret generic streaming-app-key --namespace btc --from-file=key.
 7. Copy [example values](example_values) directory to `values` dir and adjust all the files at least with your bucket and project ID.
 8. Install ETL apps via helm using chart from this repo and values we adjust on previous step, for example:
 ```bash
+
+helm install --name litecoin-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values-0-lag.yaml
+helm install --name bch-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values-0-lag.yaml
+helm install --name btc-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin/values-0-lag.yaml
+
+
 helm install --name btc --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin/values.yaml
 helm install --name bch --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values.yaml
 helm install --name dash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/dash/values.yaml
@@ -118,6 +124,10 @@ helm install --name zcash --namespace btc charts/blockchain-etl-streaming --valu
 
 helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
 helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml 
+
+helm install --name eth-blocks-0-lag --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values-0-lag.yaml --values values/ethereum/block_data/values-0-lag.yaml
+helm install --name eth-traces-0-lag --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values-0-lag.yaml --values values/ethereum/trace_data/values-0-lag.yaml 
+
 
 helm install --name eos-blocks --namespace eos charts/blockchain-etl-streaming --values values/eos/block_data/values.yaml
 ``` 

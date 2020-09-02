@@ -1,8 +1,7 @@
 def GenerateConfig(context):
     resources = []
 
-    #chains = ['bitcoin', 'bitcoin_cash', 'dogecoin', 'litecoin', 'dash', 'zcash']
-    chains = ['bitcoin']
+    chains = ['bitcoin_0_lag']
     entity_types = ['blocks', 'transactions']
 
     for chain in chains:
