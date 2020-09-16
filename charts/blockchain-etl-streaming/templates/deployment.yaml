@@ -115,6 +115,11 @@ spec:
             - "--entity-types={{ .Values.config.ENTITY_TYPES }}"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
             {{- end }}
+            {{- if eq .Values.stream.image.repository "us.gcr.io/staging-btc-etl/merklescience/ripple-etl" }}
+              - "stream"
+              - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
+              - "--output={{ .Values.config.PUB_SUB_TOPIC_PREFIX }}"
+            {{- end }}
           resources:
             {{- toYaml .Values.stream.resources | nindent 12 }}
           volumeMounts:
