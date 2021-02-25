@@ -1,8 +1,8 @@
 def GenerateConfig(context):
     resources = []
 
-    chains = ['ripple']
-    entity_types = ['payments', 'account_reports']
+    chains = ['ripple_cointaint']
+    entity_types = ['account_reports']
 
     for chain in chains:
         topic_name_prefix = 'crypto_' + chain

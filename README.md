@@ -110,6 +110,32 @@ kubectl create secret generic streaming-app-key --namespace btc --from-file=key.
 8. Install ETL apps via helm using chart from this repo and values we adjust on previous step, for example:
 ```bash
 
+ helm del --purge bch-0-lag; 
+ helm del --purge btc-0-lag; 
+ helm del --purge litecoin-0-lag;
+
+ helm del --purge ripple; 
+ helm del --purge btc; 
+ helm del --purge litecoin;
+
+ helm del --purge btc-cointaint; 
+ helm del --purge litecoin-cointaint;
+ 
+helm install --name bch-cointaint --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values-cointaint.yaml
+
+helm install --name bch-cointaint-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values-cointaint-0-lag.yaml
+
+helm install --name litecoin-cointaint --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values-cointaint.yaml
+helm install --name litecoin-cointaint-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values-cointaint-0-lag.yaml
+
+helm install --name btc-cointaint --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin/values-cointaint.yaml
+helm install --name btc-cointaint-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin/values-cointaint-0-lag.yaml
+
+helm install --name eth-blocks-cointaint-0-lag --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values-cointaint-0-lag.yaml --values values/ethereum/block_data/values-cointaint-0-lag.yaml
+helm install --name eth-traces-cointaint-0-lag --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values-cointaint-0-lag.yaml --values values/ethereum/trace_data/values-cointaint-0-lag.yaml 
+
+helm install --name bch-cointaint --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values-cointaint.yaml
+
 helm install --name litecoin-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values-0-lag.yaml
 helm install --name bch-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values-0-lag.yaml
 helm install --name btc-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin/values-0-lag.yaml
@@ -117,9 +143,11 @@ helm install --name btc-0-lag --namespace btc charts/blockchain-etl-streaming --
 
 helm install --name btc --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin/values.yaml
 helm install --name bch --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values.yaml
+helm install --name litecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values.yaml
+
+
 helm install --name dash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/dash/values.yaml
 helm install --name dogecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/dogecoin/values.yaml
-helm install --name litecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values.yaml
 helm install --name zcash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/zcash/values.yaml
 
 helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
@@ -129,6 +157,8 @@ helm install --name eth-blocks-0-lag --namespace eth charts/blockchain-etl-strea
 helm install --name eth-traces-0-lag --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values-0-lag.yaml --values values/ethereum/trace_data/values-0-lag.yaml 
 
 helm install --name ripple --namespace ripple charts/blockchain-etl-streaming --values values/ripple/values.yaml  
+
+helm install --name ripple-cointaint --namespace ripple charts/blockchain-etl-streaming --values values/ripple/values-cointaint.yaml  
 
 
 helm install --name eos-blocks --namespace eos charts/blockchain-etl-streaming --values values/eos/block_data/values.yaml

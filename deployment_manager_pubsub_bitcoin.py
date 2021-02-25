@@ -1,8 +1,8 @@
 def GenerateConfig(context):
     resources = []
 
-    chains = ['bitcoin_0_lag']
-    entity_types = ['blocks', 'transactions']
+    chains = ['litecoin_cointaint_0_lag']
+    entity_types = ['transactions', 'blocks']
 
     for chain in chains:
         topic_name_prefix = 'crypto_' + chain
