@@ -111,6 +111,7 @@ spec:
             - "--lag={{ .Values.config.LAG_BLOCKS }}"
             - "--max-workers={{ .Values.config.MAX_WORKERS }}"
             - "--batch-size=10"
+            - "--period-seconds=1"
             - "--block-batch-size=1"
             - "--entity-types={{ .Values.config.ENTITY_TYPES }}"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"

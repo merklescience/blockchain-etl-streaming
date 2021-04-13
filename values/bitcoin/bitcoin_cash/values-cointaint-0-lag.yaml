@@ -1,7 +1,0 @@
-config:
-  LAG_BLOCKS: 0
-  CHAIN: bitcoin_cash
-  PROVIDER_URI: http://rpcbitc:uen23JHdei89KL90BSIMsei23Tfssd8+we432@34.68.196.145:8332
-  GCS_PREFIX: gs://blockchain-etl-streaming/bitcoin_cash-etl/streaming-cointaint-0-lag
-  PUB_SUB_TOPIC_PREFIX: projects/staging-btc-etl/topics/crypto_bitcoin_cash_cointaint_0_lag
-  MAX_WORKERS: "10"

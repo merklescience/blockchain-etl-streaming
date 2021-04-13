@@ -1,8 +1,9 @@
 def GenerateConfig(context):
     resources = []
 
-    chains = ['litecoin_cointaint_0_lag']
-    entity_types = ['transactions', 'blocks']
+    chain = 'bitcoin_cash_sv'
+    chains = [chain]
+    entity_types = ['blocks', 'transactions']
 
     for chain in chains:
         topic_name_prefix = 'crypto_' + chain
@@ -16,18 +17,11 @@ def GenerateConfig(context):
             subscription_name = subscription_name_prefix + '.' + entity_type
             subscription_resource_name = subscription_name.replace('.', '-')
             resources.append({
-                'name': topic_resource_name,
-                'type': 'pubsub.v1.topic',
-                'properties': {
-                    'topic': topic_name
-                }
-            })
-            resources.append({
                 'name': subscription_resource_name,
                 'type': 'pubsub.v1.subscription',
                 'properties': {
                     'subscription': subscription_name,
-                    'topic': '$(ref.' + topic_resource_name + '.name)',
+                    'topic': '$(ref.' + 'projects/staging-btc-etl/topics/crypto_ripple.payments' + '.name)',
                     'ackDeadlineSeconds': 30,
                     'retainAckedMessages': True,
                     'messageRetentionDuration': message_retention_duration,
