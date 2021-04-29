@@ -17,11 +17,18 @@ def GenerateConfig(context):
             subscription_name = subscription_name_prefix + '.' + entity_type
             subscription_resource_name = subscription_name.replace('.', '-')
             resources.append({
+                'name': topic_resource_name,
+                'type': 'pubsub.v1.topic',
+                'properties': {
+                    'topic': topic_name
+                }
+            })
+            resources.append({
                 'name': subscription_resource_name,
                 'type': 'pubsub.v1.subscription',
                 'properties': {
                     'subscription': subscription_name,
-                    'topic': '$(ref.' + 'projects/staging-btc-etl/topics/crypto_ripple.payments' + '.name)',
+                    'topic': '$(ref.' + topic_resource_name + '.name)',
                     'ackDeadlineSeconds': 30,
                     'retainAckedMessages': True,
                     'messageRetentionDuration': message_retention_duration,

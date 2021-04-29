@@ -88,9 +88,11 @@ spec:
             - "--chain={{ .Values.config.CHAIN }}"
             - "--lag={{ .Values.config.LAG_BLOCKS }}"
             - "--max-workers={{ .Values.config.MAX_WORKERS }}"
-            - "--batch-size=5"
-            - "--block-batch-size=1"
+            - "--batch-size={{ .Values.config.BATCH_SIZE }}"
+            - "--period-seconds={{ .Values.config.PERIOD_SECONDS }}"
+            - "--block-batch-size={{ .Values.config.BLOCK_BATCH_SIZE }}"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
+            - "--retry_errors={{ .Values.config.RETRY_ERRORS }}"
             {{- end }}
             {{- if eq .Values.stream.image.repository "blockchainetl/eos-etl" }}
             - "stream"
@@ -110,9 +112,9 @@ spec:
             - "--output={{ .Values.config.PUB_SUB_TOPIC_PREFIX }}"
             - "--lag={{ .Values.config.LAG_BLOCKS }}"
             - "--max-workers={{ .Values.config.MAX_WORKERS }}"
-            - "--batch-size=10"
-            - "--period-seconds=1"
-            - "--block-batch-size=1"
+            - "--batch-size={{ .Values.config.BATCH_SIZE }}"
+            - "--block-batch-size={{ .Values.config.BLOCK_BATCH_SIZE }}"
+            - "--period-seconds={{ .Values.config.PERIOD_SECONDS }}"
             - "--entity-types={{ .Values.config.ENTITY_TYPES }}"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
             {{- end }}

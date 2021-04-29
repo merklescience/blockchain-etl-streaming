@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-timestamp() {
-  date +"%T" # current time
-}
 
-echo timestamp
-gcloud deployment-manager deployments create bitcoin-etl-pubsub-timestamp --template deployment_manager_pubsub_bitcoin.py
+cur_time=date
+echo $cur_time
+gcloud deployment-manager deployments create bitcoin-etl-pubsub-bsv-2 --template deployment_manager_pubsub_bitcoin.py
+
+
+
+

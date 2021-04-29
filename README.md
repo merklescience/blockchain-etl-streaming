@@ -113,6 +113,7 @@ kubectl create secret generic streaming-app-key --namespace btc --from-file=key.
  helm del --purge bch-0-lag; 
  helm del --purge btc-0-lag; 
  helm del --purge litecoin-0-lag;
+helm del --purge bchsv-0-lag; 
  helm del --purge eth-blocks-cointaint-0-lag;
  helm del --purge eth-traces-cointaint-0-lag;
 
@@ -120,10 +121,17 @@ kubectl create secret generic streaming-app-key --namespace btc --from-file=key.
  helm del --purge btc; 
  helm del --purge litecoin;
  helm del --purge bch; 
+ helm del --purge bchsv; 
 helm del --purge eth-blocks
 helm del --purge eth-traces
 helm del --purge eth-blocks-0-lag
 helm del --purge eth-traces-0-lag
+
+helm install --name bchsv-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash_sv/values-0-lag.yaml
+
+
+
+helm install --name bchsv --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash_sv/values.yaml
 
 
 helm install --name litecoin-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values-0-lag.yaml
@@ -140,6 +148,7 @@ helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming -
 
 helm install --name eth-blocks-0-lag --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values-0-lag.yaml --values values/ethereum/block_data/values-0-lag.yaml
 helm install --name eth-traces-0-lag --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values-0-lag.yaml --values values/ethereum/trace_data/values-0-lag.yaml 
+
 
 helm install --name ripple --namespace ripple charts/blockchain-etl-streaming --values values/ripple/values.yaml  
 
@@ -158,3 +167,7 @@ kubectl describe node [NODE_NAME]
 
 Refer to [blockchain-etl-dataflow](https://github.com/blockchain-etl/blockchain-etl-dataflow)
 for connecting Pub/Sub to BigQuery.
+
+
+
+Parameters
