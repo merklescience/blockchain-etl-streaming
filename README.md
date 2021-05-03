@@ -154,6 +154,9 @@ helm install --name ripple --namespace ripple charts/blockchain-etl-streaming --
 
 
 
+gsutil cp gs://blockchain-etl-streaming/ripple-etl/streaming/last_synced_block.txt /Users/saurabhdaga/repos/stream/blockchain-etl-streaming/values/ripple/last_synced_block.txt
+
+
 helm install --name eos-blocks --namespace eos charts/blockchain-etl-streaming --values values/eos/block_data/values.yaml
 ``` 
 Ethereum block and trace data streaming are decoupled for higher reliability. 

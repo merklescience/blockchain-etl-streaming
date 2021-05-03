@@ -14,12 +14,12 @@ config:
 stream:
   image:
     repository: us.gcr.io/staging-btc-etl/merklescience/bitcoin-etl
-    tag: 1.3.8-streaming-test
+    tag: 1.3.8-streaming
     pullPolicy: Always
   resources:
     requests:
-      memory: "1024Mi"
-      cpu: "800m"
+      memory: "2048Mi"
+      cpu: "1500m"
     limits:
-      memory: "1224Mi"
-      cpu: "950m"
+      memory: "4084Mi"
+      cpu: "2500m"
