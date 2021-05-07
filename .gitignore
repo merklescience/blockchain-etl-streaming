@@ -1,0 +1,14 @@
+i*.DS_Store
+gcloud-credentials.json
+*.pyc
+*.pid
+logs/*
+unittests.cfg
+settings.sh
+airflow.cfg
+.idea/*
+airflow.db
+*.swp
+psql/
+dump.rdb
+

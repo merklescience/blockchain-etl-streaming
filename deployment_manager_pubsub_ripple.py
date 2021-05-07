@@ -1,8 +1,8 @@
 def GenerateConfig(context):
     resources = []
 
-    chains = ['ethereum_cointaint_0_lag']
-    entity_types = ['transactions', 'token_transfers', 'traces']
+    chains = ['ripple_cointaint']
+    entity_types = ['account_reports']
 
     for chain in chains:
         topic_name_prefix = 'crypto_' + chain

@@ -1,0 +1,20 @@
+config:
+  LAG_BLOCKS: 0
+  CHAIN: bitcoin
+  PROVIDER_URI: http://rpcbitc:uen23JHdei89KL90BSIMsei23Tfssd8+we432@35.184.92.51:8332
+  GCS_PREFIX: gs://blockchain-etl-streaming/bitcoin-etl/streaming_0_lag
+  PUB_SUB_TOPIC_PREFIX: projects/staging-btc-etl/topics/crypto_bitcoin_0_lag
+  BLOCK_BATCH_SIZE: 3
+  BATCH_SIZE: 50
+  PERIOD_SECONDS: 0
+  MAX_WORKERS: 50
+  RETRY_ERRORS: "True"
+
+stream:
+  resources:
+    requests:
+      cpu: "850m"
+      memory: "512Mi"
+    limits:
+      cpu: "1600m"
+      memory: "2048Mi"

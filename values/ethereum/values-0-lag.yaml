@@ -1,0 +1,12 @@
+stream:
+  image:
+    repository: us.gcr.io/staging-btc-etl/merklescience/ethereum-etl
+    tag: 1.1.0-streaming
+config:
+  PROVIDER_URI: http://34.66.160.1:8545/
+  ENTITY_TYPES: transaction,token_transfer
+  LAG_BLOCKS: 0
+  MAX_WORKERS: 15
+  BLOCK_BATCH_SIZE: 10
+  BATCH_SIZE: 10
+  PERIOD_SECONDS: 0

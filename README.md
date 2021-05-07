@@ -36,10 +36,28 @@ gcloud container clusters create ethereum-etl-streaming \
 --scopes pubsub,storage-rw,logging-write,monitoring-write,service-management,service-control,trace
 ```
 
+
+```bash
+gcloud container clusters create blockchain-etl-streaming \
+--zone us-central1-a \
+--num-nodes 1 \
+--disk-size 10GB \
+--machine-type custom-2-4096 \
+--network default \
+--subnetwork default \
+--scopes pubsub,storage-rw,logging-write,monitoring-write,service-management,service-control,trace
+```
+
+
 2. Get `kubectl` credentials:
 
 ```bash
 gcloud container clusters get-credentials ethereum-etl-streaming \
+--zone us-central1-a
+```
+
+```bash
+gcloud container clusters get-credentials blockchain-etl-streaming \
 --zone us-central1-a
 ```
 
@@ -67,10 +85,6 @@ e.g. `gs:/<YOUR_BUCKET_HERE>/ethereum-etl/streaming`.
 
 Download the key. Create a Kubernetes secret:
 
-```bash
-kubectl create secret generic streaming-app-key --namespace eth --from-file=key.json=$HOME/Downloads/key.json
-```
-
 6. Install [helm] (https://github.com/helm/helm#install) 
 
 ```bash
@@ -78,20 +92,70 @@ brew install helm
 helm init  
 bash patch-tiller.sh
 ```
+
+```bash
+kubectl create secret generic streaming-app-key --namespace eth --from-file=key.json=$HOME/Desktop/merkle/staging-btc-etl-4a48dd2254f2.json 
+
+
+```
+
+
+```bash
+kubectl create secret generic streaming-app-key --namespace btc --from-file=key.json=$HOME/Desktop/merkle/staging-btc-etl-4a48dd2254f2.json 
+
+```
+
+
 7. Copy [example values](example_values) directory to `values` dir and adjust all the files at least with your bucket and project ID.
 8. Install ETL apps via helm using chart from this repo and values we adjust on previous step, for example:
 ```bash
+
+ helm del --purge bch-0-lag; 
+ helm del --purge btc-0-lag; 
+ helm del --purge litecoin-0-lag;
+helm del --purge bchsv-0-lag; 
+ helm del --purge eth-blocks-cointaint-0-lag;
+ helm del --purge eth-traces-cointaint-0-lag;
+
+ helm del --purge ripple; 
+ helm del --purge btc; 
+ helm del --purge litecoin;
+ helm del --purge bch; 
+ helm del --purge bchsv; 
+helm del --purge eth-blocks
+helm del --purge eth-traces
+helm del --purge eth-blocks-0-lag
+helm del --purge eth-traces-0-lag
+
+helm install --name bchsv-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash_sv/values-0-lag.yaml
+
+
+
+helm install --name bchsv --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash_sv/values.yaml
+
+
+helm install --name litecoin-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values-0-lag.yaml
+helm install --name bch-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values-0-lag.yaml
+helm install --name btc-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin/values-0-lag.yaml
+
+
 helm install --name btc --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin/values.yaml
 helm install --name bch --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values.yaml
-helm install --name dash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/dash/values.yaml
-helm install --name dogecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/dogecoin/values.yaml
 helm install --name litecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values.yaml
-helm install --name zcash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/zcash/values.yaml
 
-helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming \ 
---values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
-helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming \ 
---values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml 
+helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
+helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml 
+
+helm install --name eth-blocks-0-lag --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values-0-lag.yaml --values values/ethereum/block_data/values-0-lag.yaml
+helm install --name eth-traces-0-lag --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values-0-lag.yaml --values values/ethereum/trace_data/values-0-lag.yaml 
+
+
+helm install --name ripple --namespace ripple charts/blockchain-etl-streaming --values values/ripple/values.yaml  
+
+
+
+gsutil cp gs://blockchain-etl-streaming/ripple-etl/streaming/last_synced_block.txt /Users/saurabhdaga/repos/stream/blockchain-etl-streaming/values/ripple/last_synced_block.txt
+
 
 helm install --name eos-blocks --namespace eos charts/blockchain-etl-streaming --values values/eos/block_data/values.yaml
 ``` 
@@ -106,3 +170,7 @@ kubectl describe node [NODE_NAME]
 
 Refer to [blockchain-etl-dataflow](https://github.com/blockchain-etl/blockchain-etl-dataflow)
 for connecting Pub/Sub to BigQuery.
+
+
+
+Parameters

@@ -80,7 +80,7 @@ spec:
           image: "{{ .Values.stream.image.repository }}:{{ .Values.stream.image.tag }}"
           imagePullPolicy: {{ .Values.stream.image.pullPolicy }}
           args:
-            {{- if eq .Values.stream.image.repository "blockchainetl/bitcoin-etl" }}
+            {{- if eq .Values.stream.image.repository "us.gcr.io/staging-btc-etl/merklescience/bitcoin-etl" }}
             - "stream"
             - "--provider-uri={{ .Values.config.PROVIDER_URI }}"
             - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
@@ -88,9 +88,11 @@ spec:
             - "--chain={{ .Values.config.CHAIN }}"
             - "--lag={{ .Values.config.LAG_BLOCKS }}"
             - "--max-workers={{ .Values.config.MAX_WORKERS }}"
-            - "--batch-size=5"
-            - "--block-batch-size=1"
+            - "--batch-size={{ .Values.config.BATCH_SIZE }}"
+            - "--period-seconds={{ .Values.config.PERIOD_SECONDS }}"
+            - "--block-batch-size={{ .Values.config.BLOCK_BATCH_SIZE }}"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
+            - "--retry_errors={{ .Values.config.RETRY_ERRORS }}"
             {{- end }}
             {{- if eq .Values.stream.image.repository "blockchainetl/eos-etl" }}
             - "stream"
@@ -103,17 +105,23 @@ spec:
             - "--block-batch-size=100"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
             {{- end }}
-            {{- if eq .Values.stream.image.repository "blockchainetl/ethereum-etl" }}
+            {{- if eq .Values.stream.image.repository "us.gcr.io/staging-btc-etl/merklescience/ethereum-etl" }}
             - "stream"
             - "--provider-uri={{ .Values.config.PROVIDER_URI }}"
             - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
             - "--output={{ .Values.config.PUB_SUB_TOPIC_PREFIX }}"
             - "--lag={{ .Values.config.LAG_BLOCKS }}"
             - "--max-workers={{ .Values.config.MAX_WORKERS }}"
-            - "--batch-size=10"
-            - "--block-batch-size=1"
+            - "--batch-size={{ .Values.config.BATCH_SIZE }}"
+            - "--block-batch-size={{ .Values.config.BLOCK_BATCH_SIZE }}"
+            - "--period-seconds={{ .Values.config.PERIOD_SECONDS }}"
             - "--entity-types={{ .Values.config.ENTITY_TYPES }}"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
+            {{- end }}
+            {{- if eq .Values.stream.image.repository "us.gcr.io/staging-btc-etl/merklescience/ripple-etl" }}
+              - "stream"
+              - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
+              - "--output={{ .Values.config.PUB_SUB_TOPIC_PREFIX }}"
             {{- end }}
           resources:
             {{- toYaml .Values.stream.resources | nindent 12 }}
@@ -127,6 +135,8 @@ spec:
               value: /var/secrets/google/key.json
             - name: LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS
               value: "{{ .Values.stream.env.LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS }}"
+            - name: CRYPTOCOMPARE_API_KEY
+              value: "12e40a21ca4933874e0242bf0fde2b5d1f99304ca431dca5d541f3be03c0ef66"
           envFrom:
             - configMapRef:
                 name: "{{ .Release.Name }}-config"

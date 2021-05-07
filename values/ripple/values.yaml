@@ -1,0 +1,10 @@
+stream:
+  image:
+    repository: us.gcr.io/staging-btc-etl/merklescience/ripple-etl
+    tag: 1.0.0-streaming
+config:
+  CHAIN: ripple
+  GCS_PREFIX: gs://blockchain-etl-streaming/ripple-etl/streaming
+  PUB_SUB_TOPIC_PREFIX: projects/staging-btc-etl/topics/crypto_ripple
+  LAG_BLOCKS: 0
+  MAX_WORKERS: 1

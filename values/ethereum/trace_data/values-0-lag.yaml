@@ -1,0 +1,6 @@
+config:
+  PROVIDER_URI: http://34.66.160.1:8545/
+  PUB_SUB_TOPIC_PREFIX: projects/staging-btc-etl/topics/crypto_ethereum_0_lag
+  ROOT_ENTITY_TYPE: trace
+  ENTITY_TYPES: trace
+  GCS_PREFIX: gs://blockchain-etl-streaming/ethereum-etl/streaming-trace-0-lag
