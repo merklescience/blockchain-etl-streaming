@@ -154,7 +154,7 @@ helm install --name ripple --namespace ripple charts/blockchain-etl-streaming --
 
 
 
-gsutil cp gs://blockchain-etl-streaming/ripple-etl/streaming/last_synced_block.txt /Users/saurabhdaga/repos/stream/blockchain-etl-streaming/values/ripple/last_synced_block.txt
+gsutil cp /Users/saurabhdaga/repos/stream/blockchain-etl-streaming/values/ripple/last_synced_block.txt gs://blockchain-etl-streaming/bitcoin_cash_sv-etl/streaming/last_synced_block.txt 
 
 
 helm install --name eos-blocks --namespace eos charts/blockchain-etl-streaming --values values/eos/block_data/values.yaml
@@ -174,3 +174,18 @@ for connecting Pub/Sub to BigQuery.
 
 
 Parameters
+
+
+How to jump ahead to the latest block
+delete the workflow
+helm del --purge bchsv-0-lag;
+helm del --purge bchsv; 
+
+
+
+gsutil cp /Users/saurabhdaga/repos/stream/blockchain-etl-streaming/values/bitcoin/bitcoin_cash_sv/last_synced_block.txt gs://blockchain-etl-streaming/bitcoin_cash_sv-etl/streaming/last_synced_block.txt 
+gsutil cp /Users/saurabhdaga/repos/stream/blockchain-etl-streaming/values/bitcoin/bitcoin_cash_sv/last_synced_block.txt gs://blockchain-etl-streaming/bitcoin_cash_sv-etl/streaming-0-lag/last_synced_block.txt 
+
+helm install --name bchsv-0-lag --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash_sv/values-0-lag.yaml
+helm install --name bchsv --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash_sv/values.yaml
+
