@@ -122,6 +122,7 @@ spec:
               - "stream"
               - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
               - "--output={{ .Values.config.PUB_SUB_TOPIC_PREFIX }}"
+              - "--max-workers={{ .Values.config.MAX_WORKERS }}"
             {{- end }}
           resources:
             {{- toYaml .Values.stream.resources | nindent 12 }}
