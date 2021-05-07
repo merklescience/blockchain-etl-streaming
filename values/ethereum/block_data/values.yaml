@@ -1,5 +1,5 @@
 config:
-  PROVIDER_URI: http://35.184.209.110:8545/
+  PROVIDER_URI: http://34.66.160.1:8545/
   PUB_SUB_TOPIC_PREFIX: projects/staging-btc-etl/topics/crypto_ethereum
   ROOT_ENTITY_TYPE: block
   ENTITY_TYPES: transaction,token_transfer
