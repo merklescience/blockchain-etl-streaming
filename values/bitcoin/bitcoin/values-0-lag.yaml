@@ -6,7 +6,7 @@ config:
   PUB_SUB_TOPIC_PREFIX: projects/staging-btc-etl/topics/crypto_bitcoin_0_lag
   BLOCK_BATCH_SIZE: 3
   BATCH_SIZE: 50
-  PERIOD_SECONDS: 0
+  PERIOD_SECONDS: 1
   MAX_WORKERS: 50
   RETRY_ERRORS: "True"
 

@@ -181,7 +181,8 @@ delete the workflow
 helm del --purge bchsv-0-lag;
 helm del --purge bchsv; 
 
-
+gsutil cp gs://blockchain-etl-streaming/bitcoin_cash_sv-etl/streaming/last_synced_block.txt .
+gsutil cp  gs://blockchain-etl-streaming/bitcoin_cash_sv-etl/streaming-0-lag/last_synced_block.txt . 
 
 gsutil cp /Users/saurabhdaga/repos/stream/blockchain-etl-streaming/values/bitcoin/bitcoin_cash_sv/last_synced_block.txt gs://blockchain-etl-streaming/bitcoin_cash_sv-etl/streaming/last_synced_block.txt 
 gsutil cp /Users/saurabhdaga/repos/stream/blockchain-etl-streaming/values/bitcoin/bitcoin_cash_sv/last_synced_block.txt gs://blockchain-etl-streaming/bitcoin_cash_sv-etl/streaming-0-lag/last_synced_block.txt 
