@@ -8,4 +8,4 @@ config:
   BATCH_SIZE: "1"
   PERIOD_SECONDS: "1"
   MAX_WORKERS: "10"
-  RETRY_ERRORS: "False"
+  RETRY_ERRORS: "True"

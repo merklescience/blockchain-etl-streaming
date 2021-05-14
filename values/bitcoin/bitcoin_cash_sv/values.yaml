@@ -1,14 +1,14 @@
 config:
   LAG_BLOCKS: 6
   CHAIN: bitcoin_cash_sv
-  PROVIDER_URI: http://rpcbitc:uen23JHdei89KL90BSIMsei23Tfssd8+we432@34.70.144.157:8332
+  PROVIDER_URI: http://rpcbitc:uen23JHdei89KL90BSIMsei23Tfssd8+we432@34.68.22.183:8332
   GCS_PREFIX: gs://blockchain-etl-streaming/bitcoin_cash_sv-etl/streaming
   PUB_SUB_TOPIC_PREFIX: projects/staging-btc-etl/topics/crypto_bitcoin_cash_sv
   BLOCK_BATCH_SIZE: 1
   BATCH_SIZE: 1
   PERIOD_SECONDS: 10
   MAX_WORKERS: 5
-  RETRY_ERRORS: False
+  RETRY_ERRORS: "False"
 
 
 stream:
